@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Three.js Spline follower</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	</head>
+	<body>
+		<script src="assets/three.min.js"></script>
+		<script src="assets/CurveExtras.js"></script>
+		<script src="../follow-spline.js"></script>
+
+		<div id="threejs-container"></div>
+
+
+		<script>
+		// Get our container
+		var container = document.getElementById("threejs-container");
+
+		var scene, renderer, camera;
+
+		var windowHalfX = window.innerWidth / 2;
+		var windowHalfY = window.innerHeight / 2;
+
+		// Create some sample curves that can be used
+		var sampleClosedSpline = new THREE.CatmullRomCurve3([
+			new THREE.Vector3(0, -40, -40),
+			new THREE.Vector3(0, 40, -40),
+			new THREE.Vector3(0, 140, -40),
+			new THREE.Vector3(0, 40, 40),
+			new THREE.Vector3(0, -40, 40),
+		]);
+
+		sampleClosedSpline.type = 'catmullrom';
+		sampleClosedSpline.closed = true;
+
+		// Keep a dictionary of curve instances
+		var splines = {
+			GrannyKnot: new THREE.Curves.GrannyKnot(),
+			HeartCurve: new THREE.Curves.HeartCurve(3.5),
+			VivianiCurve: new THREE.Curves.VivianiCurve(70),
+			KnotCurve: new THREE.Curves.KnotCurve(),
+			HelixCurve: new THREE.Curves.HelixCurve(),
+			TrefoilKnot: new THREE.Curves.TrefoilKnot(),
+			TorusKnot: new THREE.Curves.TorusKnot(20),
+			CinquefoilKnot: new THREE.Curves.CinquefoilKnot(20),
+			TrefoilPolynomialKnot: new THREE.Curves.TrefoilPolynomialKnot(14),
+			FigureEightPolynomialKnot: new THREE.Curves.FigureEightPolynomialKnot(),
+			DecoratedTorusKnot4a: new THREE.Curves.DecoratedTorusKnot4a(),
+			DecoratedTorusKnot4b: new THREE.Curves.DecoratedTorusKnot4b(),
+			DecoratedTorusKnot5a: new THREE.Curves.DecoratedTorusKnot5a(),
+			DecoratedTorusKnot5c: new THREE.Curves.DecoratedTorusKnot5c(),
+			SampleClosedSpline: sampleClosedSpline
+		};
+
+
+
+
+		// Initialize our project and start animating
+		init();
+		animate();
+
+
+		// Setup our scene
+		function init() {
+
+			scene = new THREE.Scene();
+
+			// Add some lights
+			var light = new THREE.DirectionalLight( 0xffffff );
+			light.position.set( 0, 0, 1 );
+			scene.add( light );
+
+			light = new THREE.DirectionalLight( 0xffffff );
+			light.position.set( 0, 0, -1 );
+			scene.add( light );			
+
+			//
+
+			camera = initFollowCamera(scene, 0);
+
+			addTube(splines["CinquefoilKnot"], 100, true, 6, null, null, THREE.BackSide, 0x2194ce);
+
+			//
+
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setClearColor( 0xf0f0f0 );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			container.appendChild( renderer.domElement );
+
+			//
+
+			window.addEventListener( 'resize', onWindowResize, false );
+
+		}
+
+		function onWindowResize() {
+
+			windowHalfX = window.innerWidth / 2;
+			windowHalfY = window.innerHeight / 2;
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+		}
+
+		//
+
+		function animate() {
+
+			requestAnimationFrame( animate );
+
+			render();
+
+		}
+
+		function render() {
+
+			// Any other rendering you want to do
+
+			renderFollowCamera();
+
+			renderer.render( scene, splineCamera );
+
+		}
+	</script>
+
+	</body>
+</html>
