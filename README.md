@@ -30,4 +30,6 @@ That's it!
 
 ___
 
+By default, the camera is placed inside of the curve. You can place it outside of the curve by changing the offset when instantiating the camera.
+
 For a full example, [look at this CodePen](http://codepen.io/Zeaklous/pen/JKXpzy?editors=0010) or download the files and open `/examples/index.html` in a web browser that runs WebGL.
