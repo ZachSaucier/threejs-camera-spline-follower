@@ -30,4 +30,4 @@ That's it!
 
 ___
 
-For a full example, download the files and open `/examples/index.html` in a web browser that runs WebGL.
+For a full example, [look at this CodePen](http://codepen.io/Zeaklous/pen/JKXpzy?editors=0010) or download the files and open `/examples/index.html` in a web browser that runs WebGL.

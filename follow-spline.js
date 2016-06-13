@@ -5,7 +5,18 @@ var targetRotation = 0;
 var binormal = new THREE.Vector3();
 var normal = new THREE.Vector3();
 
-extrudePath = new THREE.Curves.TrefoilKnot();
+extrudePath = THREE.Curve.create(
+	function( s ) {
+		this.scale = ( s === undefined ) ? 10 : s;
+	},
+	function( t ) {
+		t *= Math.PI * 2;
+		var tx = ( 2 + Math.cos( 3 * t ) ) * Math.cos( 2 * t ),
+			ty = ( 2 + Math.cos( 3 * t ) ) * Math.sin( 2 * t ),
+			tz = Math.sin( 3 * t );
+		return new THREE.Vector3( tx, ty, tz ).multiplyScalar( this.scale );
+	}
+);
 
 var closed2 = true;
 var parent;
