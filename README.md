@@ -19,7 +19,6 @@ Then inside your JS make sure to do the following on initialization:
 camera = initFollowCamera(<scene>, [offset from center of curve], [look ahead boolean]);
 
 // Create the object from the curve given
-addTube(spline, segNum, closeBool, radSeg, color, geoSide, scaleVar)
 addTube(<curve>, [number of segments], [closed or not boolean], [number of radius segments], [mesh to use], [scale], [side to render], [color]);
 
 ```
